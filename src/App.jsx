@@ -17,6 +17,9 @@ import Paint from "./Apps/PaintApp/PaintApp";
 import TicTacToe from "./Apps/TicTacToe/TicTacToe";
 import MemoryGame from "./Apps/MemoryGame/MemoryGame";
 import TurnBasedCardRPG from "./Apps/TurnBasedCardRPG/TurnBasedCardRPG";
+import { onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "./firebase";
 
 // 팝업창 컴포넌트
 function Popup({ title, onClose, children }) {
@@ -178,35 +181,36 @@ function DesktopApp() {
     clickSoundRef.current?.play();
   };
 
-  // 인트로 화면에서 시작 버튼 클릭 시 로딩 처리
-  const handleStart = () => {
-    setIsLoading(true);
-    setLoadingProgress(0);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // 로그인된 경우 인트로 자동 통과
+        setIsIntro(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
-    const interval = setInterval(() => {
-      setLoadingProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setIsIntro(false);
-            setIsLoading(false);
-          }, 300);
-          return 100;
-        }
-        return prev + 5;
-      });
-    }, 100);
-    clickSoundRef.current?.play();
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      await signInWithPopup(auth, provider);
+      // 로그인되면 onAuthStateChanged에서 처리됨
+    } catch (error) {
+      console.error("Google 로그인 오류:", error);
+      setIsLoading(false);
+    }
   };
 
-  // 인트로 화면 렌더링
+  // 인트로 화면에서 시작 버튼 클릭 시 로딩 처리
   if (isIntro) {
     return (
       <div className="intro-screen">
         {!isLoading ? (
           <div>
-            <button className="power-button" onClick={handleStart}></button>
-            <p>전원을 클릭하세요</p>
+            <button className="google-login-button" onClick={handleGoogleLogin}>
+              Google 계정으로 로그인
+            </button>
           </div>
         ) : (
           <div className="loading-container">

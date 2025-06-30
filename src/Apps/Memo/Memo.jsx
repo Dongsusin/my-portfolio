@@ -1,27 +1,60 @@
 import { useState, useEffect, useRef } from "react";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
+import { db, auth } from "../../firebase";
+import { onAuthStateChanged } from "firebase/auth";
 import "./Memo.css";
-
-const LOCAL_STORAGE_KEY = "my-notes-simple";
 
 function Memo() {
   const [notes, setNotes] = useState([]);
   const [currentNoteId, setCurrentNoteId] = useState(null);
   const [input, setInput] = useState("");
   const [mode, setMode] = useState("list");
+  const [userId, setUserId] = useState(null);
   const saveTimeout = useRef(null);
 
+  // 로그인 사용자 감지
   useEffect(() => {
-    const savedNotes = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (savedNotes) {
-      const parsedNotes = JSON.parse(savedNotes);
-      setNotes(parsedNotes);
-    }
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        setUserId(null);
+        setNotes([]);
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
+  // Firestore에서 메모 불러오기
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
-  }, [notes]);
+    if (!userId) return;
 
+    const q = query(
+      collection(db, "users", userId, "memos"),
+      orderBy("updatedAt", "desc")
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const memoList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNotes(memoList);
+    });
+
+    return () => unsubscribe();
+  }, [userId]);
+
+  // 메모 선택
   function handleSelectNote(id) {
     const note = notes.find((n) => n.id === id);
     if (note) {
@@ -31,30 +64,32 @@ function Memo() {
     }
   }
 
+  // 새 메모 작성
   function handleAddNote() {
     setCurrentNoteId(null);
     setInput("");
     setMode("edit");
   }
 
-  function handleSave() {
+  // 메모 저장
+  async function handleSave() {
+    if (!userId || input.trim() === "") return;
+
     if (currentNoteId === null) {
-      const newNote = {
-        id: Date.now().toString(),
+      await addDoc(collection(db, "users", userId, "memos"), {
         content: input,
         updatedAt: Date.now(),
-      };
-      setNotes([newNote, ...notes]);
-      setCurrentNoteId(newNote.id);
+      });
     } else {
-      setNotes((prevNotes) =>
-        prevNotes.map((note) =>
-          note.id === currentNoteId
-            ? { ...note, content: input, updatedAt: Date.now() }
-            : note
-        )
-      );
+      const ref = doc(db, "users", userId, "memos", currentNoteId);
+      await updateDoc(ref, {
+        content: input,
+        updatedAt: Date.now(),
+      });
     }
+
+    setInput("");
+    setCurrentNoteId(null);
     setMode("list");
   }
 
@@ -66,12 +101,23 @@ function Memo() {
     setMode("list");
   }
 
-  function handleDelete(id) {
-    setNotes((prev) => prev.filter((note) => note.id !== id));
+  async function handleDelete(id) {
+    if (!userId) return;
+    await deleteDoc(doc(db, "users", userId, "memos", id));
     if (id === currentNoteId) {
       setCurrentNoteId(null);
       setInput("");
     }
+  }
+
+  if (!userId) {
+    return (
+      <div className="memo-app">
+        <div className="memo-sidebar">
+          <p>로그인 후 메모를 사용할 수 있습니다.</p>
+        </div>
+      </div>
+    );
   }
 
   if (mode === "list") {
