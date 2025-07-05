@@ -1,49 +1,42 @@
 body {
   margin: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-  background: linear-gradient(135deg, #00b0ff, #1e88e5);
+  font-family: "Noto Sans KR", sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background-size: 200% 200%;
   animation: wave-animation 10s ease-in-out infinite;
-  overflow: hidden;
-  position: relative;
+  color: #ffffff;
+  overflow-x: hidden;
 }
-
 
 @keyframes wave-animation {
-  0% { background-position: 0 0; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0 0; }
+  0%,
+  100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
 }
 
+/* Bubbles */
 .bubble-container {
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
 .bubble {
   position: absolute;
-  width: 15px;
-  height: 15px;
-  background-color: rgba(255, 255, 255, 0.6);
+  width: 12px;
+  height: 12px;
+  background-color: rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  animation: bubble-up 60s infinite;
-  animation-timing-function: ease-in;
+  animation: bubble-up 12s infinite ease-in;
   opacity: 0;
-  pointer-events: none;
-}
-
-.bubble:nth-child(odd) {
-  animation-delay: -2s;
-  animation-duration: 5s;
-}
-
-.bubble:nth-child(even) {
-  animation-delay: -3s;
-  animation-duration: 6s;
 }
 
 @keyframes bubble-up {
@@ -58,71 +51,58 @@ body {
 }
 
 .main-section {
-  backdrop-filter: blur(6px);
-  padding: 20px;
-  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
+}
+
+/* Intro Section */
+.intro-section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
   height: 100vh;
-  position: relative;
 }
 
 .intro-section h1 {
-  color: skyblue;
-  font-size: 2rem;
-  font-weight: 400;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  font-weight: 300;
+  color: #90caf9;
 }
 
 .intro-section h2 {
-  color: #f0f9ff;
   font-size: 3.75rem;
   font-weight: 700;
-  margin: 0;
-  margin-bottom: 10px;
+  margin: 10px 0;
+  color: #ffffff;
 }
 
 .intro-section p {
-  font-size: 3rem;
-  font-weight: 700;
-  color: rgb(50, 50, 50);
-  margin: 0;
-  margin-bottom: 10px;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #8a8a8a;
+  line-height: 1.5;
 }
 
-.skills-section h2 {
-  font-size: 28px;
-  margin-bottom: 30px;
-  color: #f0f9ff;
-}
-
-.skill-item span {
-  color: #f0f9ff;
-}
-
-.skill-list-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
+/* Skill Section */
 .skill-category {
   text-align: center;
+  margin-bottom: 40px;
 }
 
 .category-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 16px;
-  color: skyblue;
+  margin-bottom: 20px;
+  color: #81d4fa;
 }
 
 .skill-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 16px;
   justify-content: center;
 }
 
@@ -130,50 +110,82 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100px;
-  height: 100px;
-  animation: bubble 6s ease-in-out infinite;
-  border: 1px solid #fff;
-  border-radius: 50%;
-  padding: 10px;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
   cursor: pointer;
-  position: relative;
-  background-color: rgba(135, 206, 235, 0.1); 
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  transition: background-color 3s ease, box-shadow 3s ease, transform 3s ease; 
+  padding: 10px;
 }
 
 .skill-item:hover {
-  background-color: rgba(135, 206, 235, 0.7);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+  transform: translateY(-8px) scale(1.05);
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.2);
 }
 
-@keyframes bubble {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.skill-item span {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #ffffff;
 }
 
 .skill-react-icon {
-  font-size: 50px;
-  margin-bottom: 10px;
-  position: relative;
-  z-index: 2;
+  font-size: 36px;
 }
 
-.skill-react-icon.html { color: #e34f26; }
-.skill-react-icon.css { color: #1572b6; }
-.skill-react-icon.js { color: #f7df1e; }
-.skill-react-icon.ts { color: #3178c6; }
-.skill-react-icon.tailwind { color: #38bdf8; }
-.skill-react-icon.react { color: #61dafb; }
-.skill-react-icon.firebase { color: #ffca28; }
-.skill-react-icon.next { color: black; }
-.skill-react-icon.three { color: #000; }
-.skill-react-icon.vue { color: #42b883; }
-.skill-react-icon.node { color: #68a063; }
-.skill-react-icon.git { color: #f05032; }
-.skill-react-icon.github { color: #181717; }
-.skill-react-icon.discord { color: #5865f2; }
-.skill-react-icon.notion { color: #000000; }
-.skill-react-icon.figma { color: #F24E1E; }
-.skill-react-icon.unity { color: #000000; }
+/* Icon Colors (유지) */
+.skill-react-icon.html {
+  color: #e34f26;
+}
+.skill-react-icon.css {
+  color: #1572b6;
+}
+.skill-react-icon.js {
+  color: #f7df1e;
+}
+.skill-react-icon.ts {
+  color: #3178c6;
+}
+.skill-react-icon.tailwind {
+  color: #38bdf8;
+}
+.skill-react-icon.react {
+  color: #61dafb;
+}
+.skill-react-icon.firebase {
+  color: #ffca28;
+}
+.skill-react-icon.next {
+  color: black;
+}
+.skill-react-icon.three {
+  color: #000;
+}
+.skill-react-icon.vue {
+  color: #42b883;
+}
+.skill-react-icon.node {
+  color: #68a063;
+}
+.skill-react-icon.git {
+  color: #f05032;
+}
+.skill-react-icon.github {
+  color: #181717;
+}
+.skill-react-icon.discord {
+  color: #5865f2;
+}
+.skill-react-icon.notion {
+  color: #000000;
+}
+.skill-react-icon.figma {
+  color: #f24e1e;
+}
+.skill-react-icon.unity {
+  color: #000000;
+}
