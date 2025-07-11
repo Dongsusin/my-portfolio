@@ -5,7 +5,7 @@ import { personalProjects, teamProjects } from "../data/projects";
 const ProjectSection = () => {
   return (
     <div className="project-section" data-aos="fade-up">
-      <h2 className="section-title">✨ 프로젝트 ✨</h2>
+      <h2 className="section-title">프로젝트</h2>
 
       <div className="project-category">
         <h3>개인 프로젝트</h3>
