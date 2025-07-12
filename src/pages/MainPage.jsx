@@ -1,6 +1,8 @@
 import IntroSection from "../components/IntroSection";
 import SkillSection from "../components/SkillList";
 import ProjectSection from "../components/ProjectSection";
+import CertificateSection from "../components/CertificateSection";
+import ThankYouSection from "../components/ThankYouSection";
 
 const Home = () => {
   return (
@@ -21,8 +23,10 @@ const Home = () => {
       </div>
       <section className="main-section">
         <IntroSection />
+        <CertificateSection />
         <SkillSection />
         <ProjectSection />
+        <ThankYouSection />
       </section>
     </div>
   );

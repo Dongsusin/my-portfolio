@@ -86,6 +86,39 @@ body {
   line-height: 1.5;
 }
 
+.certificate-section {
+  padding: 120px;
+  width: 400px;
+  height: 400px;
+  margin: 120px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.certificate-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #ffca28;
+}
+
+.certificate-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.certificate-section li {
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-bottom: 12px;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 20px;
+}
+
 /* Skill Section */
 .skill-category {
   text-align: center;
@@ -113,9 +146,11 @@ body {
   justify-content: center;
   width: 90px;
   height: 90px;
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 25px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
   transition: all 0.3s ease;
   cursor: pointer;
   padding: 10px;
@@ -292,4 +327,66 @@ body {
 
 .github-button img:hover {
   transform: scale(1.1);
+}
+
+.thank-you-section {
+  padding: 120px 20px;
+  text-align: center;
+  background: url("https://images.unsplash.com/photo-1586528115781-6dc85ef979de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80")
+    center/cover no-repeat;
+  color: #333333;
+  border-radius: 0;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.thank-you-section h1 {
+  font-size: 5rem;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.1);
+  margin: 0;
+  position: relative;
+}
+
+.thank-you-section h1::after {
+  content: "봐주셔서 감사합니다 :)";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111111;
+  text-wrap: nowrap;
+}
+
+.thank-you-section span {
+  display: none;
+}
+
+.thank-you-section p {
+  font-size: 1.1rem;
+  color: #111111;
+  margin: 10px 0;
+}
+
+.thank-you-section .button-group {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.thank-you-section .project-button {
+  color: #111111;
+  font-weight: bold;
+  text-decoration: none;
+  border-bottom: 2px solid #111111;
+  padding-bottom: 2px;
+  transition: all 0.3s;
+}
+
+.thank-you-section .project-button:hover {
+  color: #1572b6;
+  border-bottom: 2px solid #1572b6;
 }
