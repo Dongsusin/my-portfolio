@@ -115,6 +115,30 @@ const Header = () => {
   );
 };
 
+const SideSocialBar = () => {
+  return (
+    <div className="side-social-bar">
+      <a
+        href="https://github.com/Dongsusin"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+          alt="GitHub"
+        />
+      </a>
+      <a
+        href="https://blog.naver.com/auroratime020715"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="블로그.png" alt="Naver Blog" />
+      </a>
+    </div>
+  );
+};
+
 const Home = () => {
   const [showIntro, setShowIntro] = useState(true);
 
@@ -129,6 +153,7 @@ const Home = () => {
       ) : (
         <>
           <Header />
+          <SideSocialBar />
 
           <div className="bubble-container">
             {Array.from({ length: 50 }).map((_, index) => (
