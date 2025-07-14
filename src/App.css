@@ -526,3 +526,106 @@ body {
   color: #1572b6;
   border-bottom: 2px solid #1572b6;
 }
+
+/* 모바일 대응용 미디어 쿼리 */
+@media screen and (max-width: 768px) {
+  .custom-nav {
+    gap: 20px;
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+
+  .intro-section h1 {
+    font-size: 2rem;
+  }
+
+  .intro-section h2 {
+    font-size: 2.5rem;
+  }
+
+  .intro-section p {
+    font-size: 1.2rem;
+  }
+
+  .certificate-section {
+    width: 90%;
+    height: auto;
+    padding: 40px 20px;
+    margin: 40px auto;
+    border-radius: 20px;
+  }
+
+  .certificate-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .project-card-background {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+
+  .project-info-overlay {
+    width: 100%;
+    border-left: none;
+    border-top: 3px solid #ffca28;
+    padding: 20px;
+    height: auto;
+  }
+
+  .project-info-overlay h3 {
+    font-size: 1.3rem;
+  }
+
+  .project-info-overlay p {
+    font-size: 0.9rem;
+  }
+
+  .project-info-overlay .tech-stack {
+    flex-wrap: wrap;
+  }
+
+  .thank-you-section h1 {
+    font-size: 3rem;
+  }
+
+  .thank-you-section h1::after {
+    font-size: 1.2rem;
+  }
+
+  .thank-you-section p {
+    font-size: 1rem;
+  }
+
+  .skill-list {
+    gap: 12px;
+  }
+
+  .skill-item {
+    width: 70px;
+    height: 70px;
+    padding: 5px;
+  }
+
+  .skill-item span {
+    font-size: 0.75rem;
+  }
+
+  .side-social-bar {
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .side-social-bar a img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .project-section {
+    padding: 40px 10px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
