@@ -11,7 +11,6 @@ const IntroLoader = ({ onFinish }) => {
     const timer = setTimeout(() => {
       onFinish();
     }, 7500);
-
     return () => clearTimeout(timer);
   }, [onFinish]);
 
@@ -43,7 +42,7 @@ const IntroLoader = ({ onFinish }) => {
 
           <text
             id="text"
-            x="50%" // ✅ 중앙 정렬
+            x="50%"
             y="50%"
             dominantBaseline="middle"
             textAnchor="middle"
@@ -67,7 +66,7 @@ const IntroLoader = ({ onFinish }) => {
           x="-400"
           y="0"
           width="1600"
-          height="250" // ✅ 높이 조정
+          height="250"
         />
       </svg>
     </div>
@@ -82,17 +81,16 @@ const Header = () => {
 
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-
       if (currentScrollPos > prevScrollPos && currentScrollPos > 100) {
         setVisible(false);
       } else {
         setVisible(true);
       }
-
       setPrevScrollPos(currentScrollPos);
     };
 
@@ -100,17 +98,32 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
 
+  const handleToggle = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
+  const handleClick = (id) => {
+    scrollToSection(id);
+    setMenuOpen(false);
+  };
+
   return (
     <header className={`custom-header ${visible ? "visible" : "hidden"}`}>
-      <nav className="custom-nav">
-        <span onClick={() => scrollToSection("intro")}>01:About</span>
-        <span onClick={() => scrollToSection("certificates")}>
-          02:Education
-        </span>
-        <span onClick={() => scrollToSection("skills")}>03:Skills</span>
-        <span onClick={() => scrollToSection("projects")}>04:Projects</span>
-        <span onClick={() => scrollToSection("thankyou")}>05:Contact</span>
-      </nav>
+      <div className="header-inner">
+        <div className="logo">MyPortfolio</div>
+        <div className="hamburger-menu" onClick={handleToggle}>
+          <div className={`bar ${menuOpen ? "open" : ""}`}></div>
+          <div className={`bar ${menuOpen ? "open" : ""}`}></div>
+          <div className={`bar ${menuOpen ? "open" : ""}`}></div>
+        </div>
+        <nav className={`custom-nav ${menuOpen ? "open" : ""}`}>
+          <span onClick={() => handleClick("intro")}>01:About</span>
+          <span onClick={() => handleClick("certificates")}>02:Education</span>
+          <span onClick={() => handleClick("skills")}>03:Skills</span>
+          <span onClick={() => handleClick("projects")}>04:Projects</span>
+          <span onClick={() => handleClick("thankyou")}>05:Contact</span>
+        </nav>
+      </div>
     </header>
   );
 };

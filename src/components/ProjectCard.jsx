@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import githubIcon from "../../public/github.png";
 
 const ProjectCard = ({
@@ -9,13 +9,36 @@ const ProjectCard = ({
   githubLink,
   imageUrl,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const handleToggle = () => {
+    if (isMobile) {
+      setIsOpen(!isOpen);
+    }
+  };
+
   return (
     <div
       className="project-card-background"
       style={{ backgroundImage: `url(${imageUrl})` }}
       data-aos="fade-up"
+      onClick={handleToggle}
     >
-      <div className="project-info-overlay">
+      {isMobile && !isOpen && (
+        <div className="click-hint">클릭해서 상세보기</div>
+      )}
+
+      <div className={`project-info-overlay ${isOpen ? "open" : ""}`}>
         <h3 className="highlight-title">{title}</h3>
 
         <div className="project-description">
@@ -38,6 +61,7 @@ const ProjectCard = ({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
           >
             바로가기 →
           </a>
@@ -47,6 +71,7 @@ const ProjectCard = ({
               href={githubLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
             >
               <img src={githubIcon} alt="GitHub" />
             </a>
