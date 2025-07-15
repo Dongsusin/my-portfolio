@@ -114,7 +114,6 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 0 20px;
   height: 60px;
 }
 
@@ -142,6 +141,7 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
   color: #fff;
+  padding: 20px;
 }
 
 .custom-header.fade-in {
@@ -214,8 +214,7 @@ body {
   width: 28px;
   height: 20px;
   cursor: pointer;
-  margin: 20px;
-  z-index: 1001;
+  padding: 20px;
 }
 
 .hamburger-menu .bar {
@@ -289,12 +288,12 @@ body {
 }
 
 .certificate-section li {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #ffffff;
   margin-bottom: 12px;
   line-height: 1.6;
   position: relative;
-  padding-left: 20px;
+  text-wrap: nowrap;
 }
 
 .resume-button {
@@ -436,7 +435,6 @@ body {
   color: #ffffff;
 }
 
-/* 프로젝트 카드 (새 디자인) */
 .project-card-background {
   position: relative;
   display: flex;
@@ -488,6 +486,7 @@ body {
   justify-content: center;
   gap: 5px;
   margin-top: 10px;
+  margin-bottom: 25px;
 }
 
 .project-info-overlay .tech-stack span {
@@ -760,9 +759,6 @@ body {
 
   .hamburger-menu {
     display: flex;
-    position: fixed;
-    top: 0;
-    right: 20px;
-    z-index: 999;
+    position: block;
   }
 }
